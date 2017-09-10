@@ -1,115 +1,90 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  TouchableNativeFeedback
+	AppRegistry,
+	StyleSheet,
+	Text,
+	View,
+	TouchableNativeFeedback,
+	Button
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 
 export default class MainScreen extends Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
+		this.state = {
+			currentValue: 0
+		};
+		this.data = {};
+	}
 
-    this.state = {
-      bgChange: false
-    };
-  }
-  _changeBgColor() {
-    this.setState({
-      bgChange: !this.state.bgChange
-    });
-  }
-  render() {
-    return (
-      <View style={styles.box}>
-        <TouchableNativeFeedback onPress={this._changeBgColor.bind(this)}>
-          <View
-            style={{
-              backgroundColor: !this.state.bgChange ? "#aaa" : "transparent"
-            }}
-          >
-            <View style={styles.borderbox}>
-              <Text
-                style={{
-                  color: !this.state.bgChange ? "#fff" : "#000",
-                  textAlign: "center",
-                  fontSize: 18
-                }}
-              >
-                111
-              </Text>
-            </View>
-            <View style={styles.borderbox}>
-              <Text style={styles.txt}>222</Text>
-            </View>
-          </View>
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={this._changeBgColor.bind(this)}>
-          <View
-            style={{
-              backgroundColor: !this.state.bgChange ? "#aaa" : "transparent"
-            }}
-          >
-            <View style={styles.borderbox}>
-              <Text
-                style={{
-                  color: !this.state.bgChange ? "#fff" : "#000",
-                  textAlign: "center",
-                  fontSize: 18
-                }}
-              >
-                111
-              </Text>
-            </View>
-            <View style={styles.borderbox}>
-              <Text style={styles.txt}>222</Text>
-            </View>
-          </View>
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={this._changeBgColor.bind(this)}>
-          <View
-            style={{
-              backgroundColor: !this.state.bgChange ? "#aaa" : "transparent"
-            }}
-          >
-            <View style={styles.borderbox}>
-              <Text
-                style={{
-                  color: !this.state.bgChange ? "#fff" : "#000",
-                  textAlign: "center",
-                  fontSize: 18
-                }}
-              >
-                111
-              </Text>
-            </View>
-            <View style={styles.borderbox}>
-              <Text style={styles.txt}>222</Text>
-            </View>
-          </View>
-        </TouchableNativeFeedback>
-      </View>
-    );
-  }
+	static propTypes = {};
+	render() {
+		return (
+			<View style={{ flex: 1 }}>
+				<View style={styles.box}>
+					<ColorTab
+						content={"this.data.content"}
+						value={0}
+						currentValue={this.state.currentValue}
+						onPress={() => {
+							this.setState({
+								currentValue: 0
+							});
+						}}
+					/>
+					<ColorTab
+						content={this.data.content}
+						value={1}
+						currentValue={this.state.currentValue}
+						onPress={() => {
+							this.setState({
+								currentValue: 1
+							});
+						}}
+					/>
+					<ColorTab
+						content={1}
+						value={2}
+						currentValue={this.state.currentValue}
+						onPress={() => {
+							this.setState({
+								currentValue: 2
+							});
+						}}
+					/>
+				</View>
+				<View>
+					<Button title="bbb" onPress={this._test} />
+				</View>
+			</View>
+		);
+	}
 }
 
+const ColorTab = ({ content, value, currentValue, onPress }) => {
+	return (
+		<View style={{ height: 100 }}>
+			<Text
+				onPress={onPress}
+				style={{ color: value === currentValue ? "red" : "blue" }}
+			>
+				{content}
+			</Text>
+		</View>
+	);
+};
+
+ColorTab.defaultProps = {
+	content: "aaaaaa"
+};
+ColorTab.propTypes = {
+	content: PropTypes.string
+};
+
 const styles = StyleSheet.create({
-  box: {
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-  borderbox: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    height: 100,
-    width: 100
-  },
-  txt: {
-    fontSize: 18,
-    textAlign: "center",
-    textAlignVertical: "center"
-  }
+	box: {
+		backgroundColor: "#fff",
+		flex: 1
+	}
 });
